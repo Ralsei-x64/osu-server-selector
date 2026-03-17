@@ -1,0 +1,18 @@
+#THIS IS A CONFIGURATION FILE! IT IS REQUIRED FOR OSU SERVER SELECTOR TO WORK.
+#If you use notepad to edit this file, make sure to change it back to a .TOML format if you changed it to txt.
+
+[location]
+#Leave empty to start with default options. Make sure to include the osu! executable in the string.
+gamelocation = ""
+
+[server]
+#Leave empty to start with default options. Do not include the "https://" part of the URL.
+bancho = ""
+
+[launchflags]
+#Leave empty to start with default options. Define flags like "-repair" or "-compatibility"
+flags = ""
+
+[preferences]
+#Defines if you want to not be asked what server you're trying to launch. True/False option.
+autolaunchserver = "False"
