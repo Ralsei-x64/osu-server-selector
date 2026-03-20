@@ -1,14 +1,16 @@
 # Built by a human with love.
 # My code sucks, but it's my first py project.
-
+# Import python modules
 import os
 import platform
 import subprocess
+import time
 import tomllib
 
-current_directory = os.getcwd()
-useraccount = os.getlogin()
+# Import toml gen script for config
+import genconfig
 
+# Show Title
 print("""
 ░██████╗███████╗██████╗░██╗░░░██╗███████╗██████╗░
 ██╔════╝██╔════╝██╔══██╗██║░░░██║██╔════╝██╔══██╗
@@ -22,27 +24,37 @@ print("""
 ░╚═══██╗██╔══╝░░██║░░░░░██╔══╝░░██║░░██╗░░░██║░░░██║░░██║██╔══██╗
 ██████╔╝███████╗███████╗███████╗╚█████╔╝░░░██║░░░╚█████╔╝██║░░██║
 ╚═════╝░╚══════╝╚══════╝╚══════╝░╚════╝░░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝""")  # lmao script kitty ahh title
-if platform.system() == "Linux":
-    print(
-        "You're using Linux! Make sure to point Server Selector to the correct osu! directory."  # The ironic part is that I wrote this on Linux and only tested it on Windows in a VM.
-    )
-elif platform.system() == "Windows":
-    print(
-        "Welcome to Server Selector! Make sure to configure this utility in the preferences.toml file."
-    )
-elif platform.system() == "Darwin":
-    print("macOS is not supported at all. I don't even own a mac to test this with.")
-    quit()
+print(" ")
 
-
-with open("preferences.toml", "rb") as f:
-    data = tomllib.load(f)
+# TOML Parsing Stuff
+if os.path.exists("preferences.toml"):
+    with open("preferences.toml", "rb") as f:
+        data = tomllib.load(f)
+else:
+    genconfig.main()
+    with open("preferences.toml", "rb") as f:
+        data = tomllib.load(f)
 
 gamelocation = data["location"]["gamelocation"]
 banchoserver = data["server"]["bancho"]
 autolaunchserver = data["preferences"]["autolaunchserver"]
 flags = data["launchflags"]["flags"]
+current_directory = os.getcwd()
+useraccount = os.getlogin()
 
+# Define OS to print messages
+if platform.system() == "Linux":
+    print("Welcome to osu! server selector!")
+elif platform.system() == "Windows":
+    print("Welcome to osu! server selector!")
+elif platform.system() == "Darwin":
+    print("macOS is not supported. Sorry!")
+    time.sleep(3)
+    quit()
+
+print(" ")
+
+# Handling Game Location and TOML File Info
 if gamelocation == "":
     launchlocation = os.path.join(
         os.path.expanduser("~"), "AppData", "Local", "osu!", "osu!.exe"
@@ -68,21 +80,20 @@ else:
 # print("Flags=", launchflags) #comment out when not testing
 # print("Bancho Server=", launchbanchoserver) #comment out when not testing
 # print("Launch Location=", launchlocation) #comment out when not testing
-print("Launching osu! with the server: " + launchbanchoserver)
 
 # print(launchcommand)  # comment out when not testing
-if autolaunchserver == "True":
+if autolaunchserver == True:
+    print("Launching osu! with the server: " + launchbanchoserver)
     launchcommand = launchlocation + " " + final_launchbanchoserver + launchflags
 else:
-    print("Type server URL to launch:")
-    server_URL = input()
+    server_URL = input("Type server URL to launch: ")
     if server_URL == "":
         launchcommand = launchlocation
     else:
         launchcommand = launchlocation + " " + "-devserver " + server_URL + launchflags
 
 print("Launching game...")
-subprocess.run(launchcommand)
+subprocess.run(launchcommand)  # Launches the game with the selected server/options.
 quit()
 # enjoy the spagetti code :333333
 # ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⠲⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
