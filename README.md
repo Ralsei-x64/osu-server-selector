@@ -5,6 +5,8 @@ CLI osu! server switcher built with python! This is my first python project whic
  **Warning: This utility is built for Windows. It might work on Linux but I'm 100% certain it will not work on macOS**
 
 ## 🕹️ Getting Started
+You can download the script by using 'git clone' or downloading the code as a zip through github.
+
 This utility is rather simple, you can configure it to your liking via the `preferences.toml` file provided in the utility's folder. By default, you will be asked what server you want to launch osu! with. Leaving the field blank, the game will start normally.
 
 ### Requirements
